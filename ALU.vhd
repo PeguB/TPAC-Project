@@ -8,22 +8,28 @@ entity ALU is
     a, b     : in  STD_LOGIC_VECTOR(7 downto 0);  -- 2 inputs 8-bit
     op  : in  STD_LOGIC_VECTOR(1 downto 0);  -- 1 input 4-bit for selecting function
     result   : out  STD_LOGIC_VECTOR(7 downto 0); -- 1 output 8-bit 
+	alu_over : out std_logic
     );
 end ALU; 
 architecture Behavioral of ALU is
 
-signal tmp : std_logic_vector (7 downto 0);
+
 
 begin
-   process(a,b,op)
- begin
+process(a,b,op)
+   variable tmp : STD_LOGIC_VECTOR (7 downto 0);
+begin 
+  
   case(op) is
   when "01" => -- Addition
-   tmp <= a + b ; 
+  tmp := a + b ;
+  alu_over <= '0';
   when "10" => -- Subtraction
-   tmp <= a - b ;
+  tmp := a - b ;
+  alu_over <= '0';
   when others =>
+  alu_over <= '1';
   end case;
+  result <= tmp; -- ALU out
  end process;
- result <= tmp; -- ALU out
-end Behavioral;
+end ARchitecture Behavioral;

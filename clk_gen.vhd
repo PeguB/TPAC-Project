@@ -1,19 +1,17 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
 ENTITY clk_gen IS
-	GENERIC(t_high: TIME:=30 ns; t_period: TIME:=50 ns; t_reset: TIME:=10 ns);
-	PORT(clock: OUT BIT:='1'; reset : OUT BIT);
+	PORT(clk: OUT std_logic:='1'; rst : OUT std_logic);
 END clk_gen;
 
 ARCHITECTURE behave OF clk_gen IS
 BEGIN
-	reset<='0', '1' AFTER t_reset;
+	rst<='0', '1' AFTER 5ns;
 	
 	PROCESS
 	BEGIN
-		IF NOW > 10 us THEN
-			WAIT;
-		END IF;
-
-		clock<='1', '0' AFTER t_high;
-		WAIT FOR t_period;
+		clk<='1', '0' AFTER 10ns;
+		WAIT FOR 20ns;
 	END PROCESS;
 END ARCHITECTURE;
