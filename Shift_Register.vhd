@@ -8,8 +8,7 @@ entity Shift_Register is
 		rst: in std_logic;
         shift_in : in std_logic_vector(15 downto 0);      -- Input to shift into the register
         shift_out : out std_logic_vector(15 downto 0);     -- Output shifted out from the register		 
-		cout : out std_logic;
-		sr_over : out std_logic
+		cout : out std_logic
     );
 end Shift_Register;
 
@@ -19,7 +18,6 @@ begin
     process(clk,rst)
 	variable shift_reg : std_logic_vector(15 downto 0) := "0000000000000000";
     begin
-		sr_over <= '0';
 		if rst = '0' THEN
 			shift_reg := "0000000000000000";	 
 		elsif clk='1' AND clk'EVENT and clk'LAST_VALUE='0' THEN
@@ -27,6 +25,5 @@ begin
 			cout <= shift_in(0); 
 		end if;	
 	shift_out <= shift_reg;
-	sr_over <= '1';
     end process;
 end ARchitecture Behavioral;
