@@ -21,14 +21,15 @@ process(a,b,op)
 begin 
   
   case(op) is
-  when "01" => -- Addition
-  tmp := a + b ;
-  alu_over <= '0';
-  when "10" => -- Subtraction
-  tmp := a - b ;
-  alu_over <= '0';
-  when others =>
-  alu_over <= '1';
+	  when "01" => -- Addition
+	  tmp := a + b ;
+	  alu_over <= '0';
+	  when "10" => -- Subtraction
+	  tmp := a - b ;
+	  alu_over <= '0';
+	  when others =>   
+	  tmp := a;
+	  alu_over <= '1';
   end case;
   result <= tmp; -- ALU out
  end process;

@@ -14,7 +14,7 @@ architecture Behavioral of booth_multiplier is
 
     -- Internal signals declaration
     signal product : std_logic_vector(15 downto 0);
-    signal count : integer := 8;             -- Number of iterations
+    signal count : integer := 7;             -- Number of iterations
     signal shift_output : std_logic_vector(15 downto 0);
 	signal clk,rst : std_logic;
 	signal alu_cout : std_logic;
@@ -90,34 +90,35 @@ begin
 					-- initialize
 			        product <= "00000000" & A; 
 					q <= '0';
-					count <= 8;
-					if count = 8 then
-	                    state <= "001"; -- Move to the next state only when count reaches 8
+					count <= 7;
+					if count = 7 then
+	                    state <= "001";
 	                end if;
 			     when "001" =>
 				 	-- start alu
 				 	alu_a <= product(15 downto 8);
 					alu_control_signal <= product(0) & q;
-					if alu_over = '0' then
-	                    state <= "010"; -- Move to the next state only when count reaches 8
-	                end if; 
-				 when "010" => 
+					state <= "011";
+				 when "011" => 
 				 	-- shift alu result
 				 	shift_input <= alu_result &	product(7 downto 0);
-					product <= shift_output;
-					q <= shift_reg_cout;
-					if sr_over = '1' then
-	                    state <= "011";
+					state <= "100";
+				 when "100" =>
+				 	-- shift buffer
+				 	if sr_over = '1' then
+	                    state <= "101";
 	                end if; 
-				 when "011" =>
+				 when "101" =>
 				 	-- decrement count
+					product <= shift_output;	
+					q <= shift_reg_cout; 
 				 	count <= count - 1;
 					if count > 0 then 
 						state <= "001";
 					else
-						state <= "100";
+						state <= "110";
 					end if;
-				 when "100"	=>
+				 when "110"	=>
 				 	-- asign result
 				 	result <= product;
 			     when others =>							

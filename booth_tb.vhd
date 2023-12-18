@@ -34,8 +34,8 @@ begin
     begin
 
         -- Test multiplication of 16 and 3
-        A_tb <= "00000011";
-        B_tb <= "00010000";  
+        A_tb <= "00100011";
+        B_tb <= "00000011";  
  
         wait for 500 ns;
         wait;

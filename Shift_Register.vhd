@@ -19,14 +19,14 @@ begin
     process(clk,rst)
 	variable shift_reg : std_logic_vector(15 downto 0) := "0000000000000000";
     begin
+		sr_over <= '0';
 		if rst = '0' THEN
 			shift_reg := "0000000000000000";	 
-			sr_over <= '0';  
 		elsif clk='1' AND clk'EVENT and clk'LAST_VALUE='0' THEN
         	shift_reg := shift_in(15) & shift_in(15 downto 1) ;
-			cout <= shift_in(0);
-			sr_over <= '1'; 
+			cout <= shift_in(0); 
 		end if;	
 	shift_out <= shift_reg;
+	sr_over <= '1';
     end process;
 end ARchitecture Behavioral;
